@@ -210,6 +210,15 @@ app.post('/studentcheck', function(req, res){
 	})
 })
 
+app.post('/supercheck', function(req, res){
+	var name = req.body.name;
+	db.collection('faculties').find({ title : { $regex: name, $options: 'i' } }).toArray(function(err, doc){
+		if (err)	res.send({error: err});
+		else if (doc.length==0)	res.send({error: 'nomatch'});
+		else res.send(doc[0]);
+	})
+})
+
 //show thesis list
 app.post('/gettheses', function(req, res){
 	db.collection('theses').find({}).project({abstract:0, isIssued:0, year:0, by:0, pdf:0, keywords:0, location:0, publishInfo:0 }).toArray(function(err, doc){
