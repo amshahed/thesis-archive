@@ -1,0 +1,40 @@
+{
+	"title" : "Use of Elliptic Curves in Cryptography",
+	"supervisor" : [
+		"akhter",
+		"Prof Dr. Syed Akhter Hossain"
+	],
+	"authors" : [
+		201514020,
+		"Shahed Hasan",
+		201514040,
+		"Taani Hossain",
+		201514024,
+		"Tasnia Muna"
+	],
+	"year" : 2017,
+	"by" : "CSE 15",
+	"abstract" : "",
+	"pdf" : "",
+	"keywords" : [
+		"elliptic curve",
+		"algebric group",
+		"finite field",
+		"discrete logarithm"
+	],
+	"category" : "security",
+	"location" : {
+		"code" : "A29",
+		"shelf" : 3,
+		"row" : 10
+	},
+	"isIssued" : false,
+	"publishInfo" : {
+		"isPublished" : true,
+		"publication" : "Conference on the Theory and Application of Cryptographic Techniques",
+		"date" : "01 December 2000"
+	}
+}
+
+{ "title" : "The Blockchain and Kudos: A Distributed System for Educational Record, Reputation and Reward", "supervisor" : [ "akhter", "Prof Dr. Syed Akhter Hossain" ], "authors" : [ 201514020, "Shahed Hasan", 201514040, "Taani Hossain", 201514024, "Tasnia Muna" ], "year" : 2017, "by" : "CSE 15", "abstract" : "", "pdf" : "", "keywords" : [ "blockchain", "reputational management", "e-portfolio" ], "category" : "blockchain", "location" : { "code" : "I27", "shelf" : 5, "row" : 4 }, "isIssued" : false, "publishInfo" : { "isPublished" : true, "publication" : "Conference on the Theory and Application of Cryptographic Techniques", "date" : "01 December 2000" } }
+

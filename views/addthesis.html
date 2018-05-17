@@ -1,0 +1,78 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Faculty Sign up</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<link rel="stylesheet" href="assets/css/addthesis.css" />
+ 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
+	</head>
+	<body class="subpage">
+
+		<!-- Header -->
+			<header id="header">
+				<div class="logo">MIST CSE Thesis Archive</div>
+				<a href="#menu">Menu</a>
+			</header>
+
+		<!-- Nav -->
+			<nav id="menu">
+				<ul class="links">
+					<li><a href="index.html">Home</a></li>
+					<li><a href="generic.html">Profile</a></li>
+					<li><a href="elements.html">Thesis List</a></li>
+				</ul>
+			</nav>
+
+		<!-- One -->
+			<section id="One" class="wrapper style3">
+				<div class="inner">
+					<header class="align-center">
+						<p ></p>
+						<h2>Add Thesis Here</h2>
+					</header>
+				</div>
+			</section>
+
+		<!-- Two -->
+			<section id="two" class="wrapper style3">
+				<div class="inner">
+														
+			<div class='signup'>
+			
+				<font size="3">Thesis Title</font><br>
+			<input type='text' id='title' placeholder="Enter the title of the thesis" required><br>
+			<font size="3">Keywords(at least 2 required)</font><br><br>
+			<input onkeydown="adinkey(this)" type='text' placeholder="Enter the keyword" id='keyword'><br>
+			<ul id='keyholder'>
+			</ul>
+			<font size="3">Supervisor</font><br><br>
+			<input onkeydown="adinsup(this)" type='text' placeholder="Enter the name of supervisor" id='super'><br>
+			<ul id='superholder'></ul>
+<font size="3">Students(at least 3 students must be added)</font><br><br>
+			<input onkeydown="adinstu(this)" type='number' placeholder="Enter ID of student" id='student'>
+			<ul id='studentholder'></ul><br>
+			<button class='btn btn-success button special' onclick='addThesis()' >Add Thesis</button>
+   		</div>
+        </div>
+			</div>				
+				</div>
+										
+			</section>
+
+		<!-- Scripts -->
+			<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/skel.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+			<script src="assets/js/addthesis.js"></script>
+
+	</body>
+</html>
+
+
+

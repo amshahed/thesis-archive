@@ -1,0 +1,30 @@
+{
+  "name": "thesis_archive",
+  "version": "2.0.1",
+  "description": "SAD project",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "shahed, taani",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^2.0.1",
+    "body-parser": "^1.18.2",
+    "express": "^4.16.3",
+    "fs": "0.0.1-security",
+    "mongodb": "^3.0.7",
+    "multer": "^1.3.0",
+    "pdf-text-extract": "^1.5.0"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ams-hasan/thesis-archive.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ams-hasan/thesis-archive/issues"
+  },
+  "homepage": "https://github.com/ams-hasan/thesis-archive#readme"
+}

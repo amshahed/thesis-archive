@@ -1,0 +1,86 @@
+<!DOCTYPE HTML>
+<!--
+	Hielo by TEMPLATED
+	templated.co @templatedco
+	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
+-->
+<html>
+	<head>
+		<title>Student Sign up</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<link href="/assets/css/signup.css" rel="stylesheet" type="text/css">
+  		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link href='https://fonts.googleapis.com/css?family=Advent Pro' rel='stylesheet'>
+		<link href='https://fonts.googleapis.com/css?family=Abel' rel='stylesheet'>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+  		<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+  		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	</head>
+	<body class="subpage">
+
+		<!-- Header -->
+			<header id="header">
+				<div class="logo">MIST CSE Thesis Archive</div>
+				<a href="#menu">Menu</a>
+			</header>
+
+		<!-- Nav -->
+			<nav id="menu">
+				<ul class="links">
+					<li><a href="/">Home</a></li>
+					<li><a href="/login">Log In</a></li>
+					<li><a href="/signupfaculty">Sign up as Faculty</a></li>
+				</ul>
+			</nav>
+
+		<!-- One -->
+			<section id="One" class="wrapper style3">
+				<div class="inner">
+					<header class="align-center">
+						<font>Sign Up </font><p class="category"></p>
+						<h2 class="thesis_title">Student</h2>
+					</header>
+				</div>
+			</section>
+
+		<!-- Two -->
+			<section id="two" class="wrapper style3">
+				<div class="inner">
+														
+			<div class='signup'>
+				<input type="text" id="name" placeholder="Name">
+				<input type="number" id='id' placeholder="ID">
+				Status of the student: 
+				<select id='stat'>
+					<option value='yes'>Current</option>
+					<option value='no'>Former</option>
+				</select>
+				<input type='number' id='yr' placeholder="Passing Year">
+				<input type="number" id='lvl' placeholder="level">
+				<input type="text" id='phone' placeholder="contact">
+				<input type='email' id='email' placeholder="Email ID">
+				<input type='password' id='pass' placeholder="Password">
+				<input type='password' id='cpass' placeholder="Confirm Password">
+				<input type='submit' class='button special big' value='Sign up' onclick="sendForm()">
+												
+			</div>				
+				</div>
+										
+			</section>
+
+		
+
+		<!-- Scripts -->
+			<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/skel.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+			<script src="assets/js/signup.js"></script>
+
+	</body>
+</html>

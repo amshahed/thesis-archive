@@ -1,0 +1,36 @@
+label {
+   color: white;
+   font-family: 'Abel';
+   font-size: 1.2em;
+   padding: 7px;
+}
+input, textarea {
+   width: 80%;
+   border-radius: 5px;
+   padding: 5px;
+   background: transparent;
+}
+button {
+   padding: 5px;
+}
+#keyholder, #superholder, #stuholder {
+   list-style: none;
+   margin-top: 10px;
+}
+#keyholder li, #superholder li, #studentholder li {
+   display: inline-block;
+   background: #BDC3C7;
+   background: white;
+   padding: .5%;
+   border-radius: 2px;
+   margin-right: .5%;
+   font-weight: bold;
+}
+.fa {
+   cursor: pointer;
+   color: #943126;
+   font-weight: bold;
+}
+.btn {
+   margin:1% 0;
+}
