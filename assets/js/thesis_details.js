@@ -21,15 +21,21 @@ $(document).ready(function(){
 			}
 			else {
 				$('.title').html(json.title);
+				$('.category').html(json.category);
+				$('.abstract').html(json.abstract);
 				$('.supervisor').html(json.supervisor[1]);
 				$('.authors').html(json.authors[1]+'<br>'+json.authors[3]+'<br>'+json.authors[5]);
 				$('.keys').html(json.keywords[0]);
 				for (var i=1; i<json.keywords.length; i++)
-					$('.keys').append(json.keywords[i]);
+					$('.keys').append(', '+json.keywords[i]);
 				$('.location').html('Shelf '+json.location.shelf+', Row '+json.location.row);
 				if (json.publishInfo.isPublished==true){
 					$('.pub').html(json.publishInfo.publication);
 					$('.pub_date').html(json.publishInfo.date);
+				}
+				else {
+					$('.pub').html('N/A');
+					$('.pub_date').html('N/A');
 				}
 				$('.pdflink').attr('href','/getpdf/'+json._id);
 			}

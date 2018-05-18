@@ -73,7 +73,11 @@ app.get('/staffprofile', function(req, res){
 
 app.get('/profile', function(req, res){
 	res.sendFile(__dirname + '/views/profile.html');
-});	
+});
+
+app.get('/stat', function(req, res){
+	res.sendFile(__dirname + '/views/chart.html');
+})	
 
 app.post('/getinfo', function(req, res){
 	var id = req.body.id;
@@ -261,7 +265,7 @@ app.post('/thesisinfo', upload.single('the-file'), function(req, res){
 	var obj = { title, abstract:'', category, keywords, supervisor, authors, year, batch, pdf:'' };
 	obj.location = { code, shelf, row };
 	if (isPublished=='yes') obj.publishInfo = { isPublished:true, publication, date };
-	else obj.publication = { isPublished:false, publication:'', date: '' };
+	else obj.publishInfo = { isPublished:false, publication:'', date: '' };
 	obj.isIssued = false;
 	text(__dirname+'/papers/'+req.file.originalname, function (err, pages) {
 	  if (err)	res.send({error: err});
@@ -270,6 +274,7 @@ app.post('/thesisinfo', upload.single('the-file'), function(req, res){
 	  	abstract.splice(0,1);
 	  	abstract.splice(abstract.length-2,2);
 	  	obj.abstract = abstract.join('');
+	  	obj.pdf = req.file.originalname;
 		db.collection('theses').insert(obj, function(err, doc){
 			if (err)	res.send({error: err});
 			else res.send({added:true});
@@ -280,8 +285,9 @@ app.post('/thesisinfo', upload.single('the-file'), function(req, res){
 
 app.get('/getpdf/:id', function(req, res){
 	var id = req.params.id;
-	db.collection('theses').findOne({}).then(function(doc){
-		res.download(__dirname+'/papers/'+doc.pdf);
+	db.collection('theses').find({_id:oid(id)}).toArray(function(err, doc){
+		if (err)	res.send({error: err});
+		else res.download(__dirname+'/papers/'+doc[0].pdf);
 	})
 })
 
@@ -310,23 +316,39 @@ app.post('/search', function(req, res){
 	})
 });
 
-app.get('/text', function(req, res){
-	text(__dirname+'/papers/paper-kot.pdf', function (err, pages) {
-	  if (err)	res.send({err});
-	  else res.send(pages);
-	})
-})
-
-app.get('/chart', function(req, res){
+app.post('/chartinfo', function(req, res){
 	var arr = [];
+	var arrays = {
+		category : [],
+		publication : [ [ 'Published', 0 ], [ 'Not Published', 0 ] ]
+	}
 	var obj = {
 		title: 0, supervisor: 0, authors: 0,
-		year: 0, by: 0, abstract: 0, pdf: 0,
-		keywords: 0, location: 0,
-		publishInfo: 0
+		year: 0, batch: 0, abstract: 0, pdf: 0,
+		keywords: 0, location: 0, isIssued: 0
 	};
 	db.collection('theses').find({}).project(obj).toArray(function(err, doc){
 		if (err)	res.send({error: err});
-		else res.send(doc);
+		else {
+			for (var i=0; i<doc.length; i++){
+				if (arr.includes(doc[i].category)){
+					var idx = arr.indexOf(doc[i].category) + 1;
+					arr[idx]++;
+				}
+				else {
+					arr.push(doc[i].category);
+					arr.push(1);
+				}
+				if (doc[i].publishInfo.isPublished==true){
+					arrays.publication[0][1]++;
+				}
+				else
+					arrays.publication[1][1]++;
+			}
+			for (var i=0; i<arr.length; i+=2){
+				arrays.category.push([ arr[i], arr[i+1] ]);
+			}
+			res.send(arrays);
+		}
 	})
 })
