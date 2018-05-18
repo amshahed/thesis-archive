@@ -10,7 +10,7 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" href="assets/css/main.css" />
-		<link rel="stylesheet" href="assets/css/signup.css" />
+		<link rel="stylesheet" href="assets/css/second.css">
  		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 	</head>
 	<body class="subpage">
@@ -45,19 +45,19 @@
 				<div class="inner">
 														
 			<div class='signup'>
-				<input type="text" id="name" placeholder="Name">
-				<input type="number" id='id' placeholder="ID">
+				<input type="text" id="name" placeholder="Enter your full name"><br>
+				<input type="number" id='id' placeholder="Enter your ID"><br>
 				Status of the student: 
 				<select id='stat'>
 					<option value='yes'>Current</option>
 					<option value='no'>Former</option>
-				</select>
-				<input type='number' id='yr' placeholder="Passing Year">
-				<input type="number" id='lvl' placeholder="level">
-				<input type="text" id='phone' placeholder="contact">
-				<input type='email' id='email' placeholder="Email ID">
-				<input type='password' id='pass' placeholder="Password">
-				<input type='password' id='cpass' placeholder="Confirm Password">
+				</select><br>
+				<input type='number' id='yr' placeholder="Enter the year you passed in"><br>
+				<input type="number" id='lvl' placeholder="Enter your current level"><br>
+				<input type="text" id='phone' placeholder="Enter your contact no"><br>
+				<input type='email' id='email' placeholder="Enter your Email ID"><br>
+				<input type='password' id='pass' placeholder="Enter a Password of at least 5 length"><br>
+				<input type='password' id='cpass' placeholder="Confirm Password"><br>
 				<input type='submit' class='button special big' value='Sign up' onclick="sendForm()">
 												
 			</div>				

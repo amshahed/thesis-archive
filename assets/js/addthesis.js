@@ -1,19 +1,12 @@
 
 var keyarr=[], superarr=[], studentarr=[];
 
-//functions for adding keywords
-function adinkey(el){			//pass value to add keyword when Enter is pressed
-	if (event.key=='Enter'){
-		var val = el.value;
-		addKeyword(val);
-	}
-}
 function removeKey(val){
 	var i = keyarr.indexOf(val);
 	keyarr.splice(i,1);
 	$('#keyholder li').eq(i).remove();
 }
-function addKeyword(val){
+function addKeyword(){
 	val = $('#keyword').val();
 	if (val=='')
 		return;
@@ -26,20 +19,12 @@ function addKeyword(val){
 	}
 }
 
-
-//functions for adding supervisors
-function adinsup(el){
-	if (event.key=='Enter'){
-		var val = el.value;
-		addSuper(val);
-	}
-}
 function removeSuper(val){
 	var i = superarr.indexOf(val);
 	superarr.splice(i,1);
 	$('#superholder li').eq(i).remove();
 }
-function addSuper(val){
+function addSupervisor(){
 	val = $('#super').val();
 	if (val=='')
 		return;
@@ -50,6 +35,7 @@ function addSuper(val){
 		async: false,
 		data: { name: val },
 		success: function(json){
+			console.log(json);
 			if (json.hasOwnProperty('error')){
 				if (json.error=='nomatch')
 					toastr.error('No match found', '', {timeOut: 1300});
@@ -68,19 +54,12 @@ function addSuper(val){
 	});
 }
 
-//functions for adding and removing students
-function adinstu(el){
-	if (event.key=='Enter'){
-		var val = el.value;
-		addStudent(val);
-	}
-}
 function removeStudent(val){
 	var i = studentarr.indexOf(parseInt(val));
 	studentarr.splice(i,1);
 	$('#studentholder li').eq(i).remove();
 }
-function addStudent(val){
+function addStudent(){
 	val = $('#student').val();
 	if (val=='')
 		return;
@@ -100,18 +79,15 @@ function addStudent(val){
 			else if (studentarr.includes(json._id))
 				toastr.info('Student already added', '', {timeOut: 1300});
 			else {
-				studentarr.push(json._id);
+				studentarr.push(json._id); studentarr.push(json.name);
 				$('#studentholder').append('<li>'+json.name+'&nbsp;&nbsp;<i class="fa fa-times" onclick="removeStudent(\''+json._id+'\')"></i></li>');
 			}
 		}
 	});
 }
-function addThesis(){
+
+function processForm(){
 	var title = $('#title').val();
-	if (title.length==0){
-		toastr.error('Enter the title of the thesis', '', {timeOut: 1300});
-		return;
-	}
 	if (keyarr.length<2){
 		toastr.error('Enter at least 2 keywords', '', {timeOut: 1300});
 		return;
@@ -124,7 +100,6 @@ function addThesis(){
 		toastr.error('Enter at least 3 students', '', {timeOut: 1300});
 		return;
 	}
-	var obj
 	$.ajax({
 		type: 'POST',
 		url: '/theinfo',
@@ -140,4 +115,56 @@ function addThesis(){
 	});
 }
 
-$('#uploadform').submit()
+function hidePublishInfo(){
+	$('#publication').val('');
+	$('#date').val('');
+	$('.publishinfo').hide();
+}
+
+function showPublishInfo(){
+	$('.publishinfo').show();
+}
+
+$(document).ready(function(){
+	$('.publishinfo').hide();
+})
+
+$('.thesisadd').submit(function(e){
+	e.preventDefault();
+	if (keyarr.length<2){
+		toastr.error('Enter at least 2 keywords', '', {timeOut: 1300});
+		return;
+	}
+	if (superarr.length==0){
+		toastr.error('Enter supervisor', '', {timeOut: 1300});
+		return;
+	}
+	if (studentarr.length<3){
+		toastr.error('Enter at least 3 students', '', {timeOut: 1300});
+		return;
+	}
+	var title = $('#title').val();
+	var category = $('#category').val();
+	var keywords = JSON.stringify(keyarr);
+	var supervisor = JSON.stringify(superarr);
+	var students = JSON.stringify(studentarr);
+	var batch = $('#batch').val();
+	var year = $('#year').val();
+	var isPublished = $('input[name=publish]:checked').val();
+	var publication = $('#publication').val();
+	var date = $('#date').val();
+	var code = $('#code').val();
+	var shelf = $('#shelf').val();
+	var row = $('#row').val();
+	$(this).ajaxSubmit({
+		data : { title, category, keywords, supervisor, students, batch, year, isPublished, publication, publication, date, code, shelf, row },
+		success: function(json){
+			if (json.hasOwnProperty('error'))
+				toastr.error(json.error, '', {timeOut: 1300});
+			else {
+				toastr.success('Thesis Added', '', {timeOut: 1300});
+				location.reload();
+			}
+		}
+	})
+})

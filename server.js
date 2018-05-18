@@ -212,7 +212,7 @@ app.post('/studentcheck', function(req, res){
 
 app.post('/supercheck', function(req, res){
 	var name = req.body.name;
-	db.collection('faculties').find({ title : { $regex: name, $options: 'i' } }).toArray(function(err, doc){
+	db.collection('faculties').find({ name : { $regex: name, $options: 'i' } }).toArray(function(err, doc){
 		if (err)	res.send({error: err});
 		else if (doc.length==0)	res.send({error: 'nomatch'});
 		else res.send(doc[0]);
@@ -244,15 +244,38 @@ app.post('/theinfo', function(req, res){
 	});
 })
 
-app.post('/upload', upload.single('the-file'), function(req, res){
-	if (req.file==undefined)
-		res.send({error: 'nofile'});
-	else {
-		db.collection('theses').update({}, { $set: { pdf: req.file.filename } }, function(err, doc){
+app.post('/thesisinfo', upload.single('the-file'), function(req, res){
+	var title = req.body.title;
+	var category = req.body.category;
+	var keywords = JSON.parse(req.body.keywords);
+	var supervisor = JSON.parse(req.body.supervisor);
+	var authors = JSON.parse(req.body.students);
+	var batch = Number(req.body.batch);
+	var year = Number(req.body.year);
+	var isPublished = req.body.isPublished;
+	var publication = req.body.publication;
+	var date = req.body.date;
+	var code = req.body.code;
+	var shelf = Number(req.body.shelf);
+	var row = Number(req.body.row);
+	var obj = { title, abstract:'', category, keywords, supervisor, authors, year, batch, pdf:'' };
+	obj.location = { code, shelf, row };
+	if (isPublished=='yes') obj.publishInfo = { isPublished:true, publication, date };
+	else obj.publication = { isPublished:false, publication:'', date: '' };
+	obj.isIssued = false;
+	text(__dirname+'/papers/'+req.file.originalname, function (err, pages) {
+	  if (err)	res.send({error: err});
+	  else {
+	  	var abstract = pages[4].split('\n');
+	  	abstract.splice(0,1);
+	  	abstract.splice(abstract.length-2,2);
+	  	obj.abstract = abstract.join('');
+		db.collection('theses').insert(obj, function(err, doc){
 			if (err)	res.send({error: err});
-			else res.send({uploaded:true});
+			else res.send({added:true});
 		})
-	}
+	  }
+	})
 })
 
 app.get('/getpdf/:id', function(req, res){

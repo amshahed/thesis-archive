@@ -36,5 +36,13 @@
 	}
 }
 
-{ "title" : "The Blockchain and Kudos: A Distributed System for Educational Record, Reputation and Reward", "supervisor" : [ "akhter", "Prof Dr. Syed Akhter Hossain" ], "authors" : [ 201514020, "Shahed Hasan", 201514040, "Taani Hossain", 201514024, "Tasnia Muna" ], "year" : 2017, "by" : "CSE 15", "abstract" : "", "pdf" : "", "keywords" : [ "blockchain", "reputational management", "e-portfolio" ], "category" : "blockchain", "location" : { "code" : "I27", "shelf" : 5, "row" : 4 }, "isIssued" : false, "publishInfo" : { "isPublished" : true, "publication" : "Conference on the Theory and Application of Cryptographic Techniques", "date" : "01 December 2000" } }
-
+{
+	"_id" : "anannya",
+	"name" : "Tasmiah Tamzid Anannya",
+	"designation" : "Lecturer",
+	"department" : "CSE",
+	"university" : "Military Institute of Science and Technology",
+	"phone" : "",
+	"email" : "anannya.tasmi@gmail.com",
+	"password" : "$2a$05$0IXo/3fte.t7zu2BeaOAFe/8Iac7orB1wFkMHlb0ABGt79zU/D7U."
+}

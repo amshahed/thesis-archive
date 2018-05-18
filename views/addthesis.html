@@ -1,11 +1,11 @@
 <!DOCTYPE HTML>
 <html>
 	<head>
-		<title>Faculty Sign up</title>
+		<title>Add Thesis</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" href="assets/css/main.css" />
-		<link rel="stylesheet" href="assets/css/addthesis.css" />
+		<link rel="stylesheet" href="assets/css/second.css" />
  		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 	</head>
 	<body class="subpage">
@@ -30,40 +30,88 @@
 				<div class="inner">
 					<header class="align-center">
 						<p ></p>
-						<h2>Add Thesis Here</h2>
+						<h2>Add Thesis</h2>
 					</header>
 				</div>
 			</section>
 
 		<!-- Two -->
 			<section id="two" class="wrapper style3">
-				<div class="inner">
-														
-			<div class='signup'>
-			
-				<font size="3">Thesis Title</font><br>
-			<input type='text' id='title' placeholder="Enter the title of the thesis" required><br>
-			<font size="3">Keywords(at least 2 required)</font><br><br>
-			<input onkeydown="adinkey(this)" type='text' placeholder="Enter the keyword" id='keyword'><br>
-			<ul id='keyholder'>
-			</ul>
-			<font size="3">Supervisor</font><br><br>
-			<input onkeydown="adinsup(this)" type='text' placeholder="Enter the name of supervisor" id='super'><br>
-			<ul id='superholder'></ul>
-<font size="3">Students(at least 3 students must be added)</font><br><br>
-			<input onkeydown="adinstu(this)" type='number' placeholder="Enter ID of student" id='student'>
-			<ul id='studentholder'></ul><br>
-			<button class='btn btn-success button special' onclick='addThesis()' >Add Thesis</button>
-   		</div>
-        </div>
-			</div>				
-				</div>
-										
+				<div class="inner">									
+					<div class='signup'>
+						<form class='thesisadd' enctype="multipart/form-data" action="/thesisinfo" method="POST">
+							<font size="3">Thesis Title</font><br>
+							<input type='text' id='title' placeholder="Enter the title of the thesis" required><br>
+							<font size='3'>Category</font><br>
+							<input type='text' id='category' placeholder="Enter the category of the thesis" required><br>
+							<font size="3">Keywords(at least 2 required)</font><br>
+							<input style="width:93%; display:inline-block;" type='text' placeholder="Enter keywords" id='keyword'>
+							<button onclick="addKeyword()" style="opacity: .7;" type='button'>add</button>
+							<ul id='keyholder'></ul>
+							<font size="3">Supervisor</font><br>
+							<input style="width:93%; display:inline-block;" type='text' placeholder="Enter the name of supervisor" id='super'>
+							<button onclick="addSupervisor()" style="opacity: .7;" type='button'>add</button>
+							<ul id='superholder'></ul>
+							<font size="3">Authors(at least 3 authors must be added)</font><br>
+							<input style="width:93%; display:inline-block;" type='number' placeholder="Enter ID of author" id='student'>
+							<button onclick="addStudent()" style="opacity: .7;" type='button'>add</button>
+							<ul id='studentholder'></ul>
+							<font size="3">Batch</font><br>
+							<select id='batch'>
+								<option value='01'>CSE 01</option>
+								<option value='02'>CSE 02</option>
+								<option value='03'>CSE 03</option>
+								<option value='04'>CSE 04</option>
+								<option value='05'>CSE 05</option>
+								<option value='06'>CSE 06</option>
+								<option value='07'>CSE 07</option>
+								<option value='08'>CSE 08</option>
+								<option value='09'>CSE 09</option>
+								<option value='10'>CSE 10</option>
+								<option value='11'>CSE 11</option>
+								<option value='12'>CSE 12</option>
+								<option value='13'>CSE 13</option>
+								<option value='14'>CSE 14</option>
+								<option value='15'>CSE 15</option>
+								<option value='16'>CSE 16</option>
+								<option value='17'>CSE 17</option>
+								<option value='18'>CSE 18</option>
+							</select><br>
+							<font size="3">Completion Year</font><br>
+							<input type='number' id='year' placeholder="Enter Completion Year" required><br><br><br>
+							<font size='5'>Is the Thesis Published?</font><br>
+							<div style='display: inline-block;' class="4u 12u$(small)">
+								<input type="radio" id="priority-low" onclick='hidePublishInfo()' name="publish" value='no' checked>
+								<label for="priority-low">No</label>
+							</div>
+							<div class="4u 12u$(small)">
+								<input type="radio" id="priority-normal" onclick="showPublishInfo()" name="publish" value='yes'>
+								<label for="priority-normal">Yes</label>
+							</div>
+							<div class='publishinfo'>
+								<font size='3'>Publication</font><br>
+								<input type='text' id='publication' placeholder="Enter the name of Publication"><br>
+								<font size='3'>Date of Publication</font><br>
+								<input type='date' id='date' placeholder="Publication Date"><br>
+							</div>
+							<font size='5'>Location Info</font><br>
+							<font size='3'>Given Code for the Thesis</font><br>
+							<input type='text' id='code' placeholder="Enter the Given Code for the thesis" required><br>
+							<font size='3'>Shelf No</font><br>
+							<input type='number' id='shelf' placeholder="Enter the Shelf number" required><br>
+							<font size='3'>Row of the Shelf</font><br>
+							<input type='number' id='row' placeholder="Enter the row number of the Shelf" required><br>
+							<input type='file' name='the-file' required><br><br>
+							<input type='submit' class='button special' value='Add Thesis'>
+						</form>
+		   			</div>
+        		</div>
 			</section>
 
 		<!-- Scripts -->
 			<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-			<script src="assets/js/jquery.min.js"></script>
+			<script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+			<script src="//cdnjs.cloudflare.com/ajax/libs/jquery.form/3.51/jquery.form.min.js"></script>
 			<script src="assets/js/jquery.scrollex.min.js"></script>
 			<script src="assets/js/skel.min.js"></script>
 			<script src="assets/js/util.js"></script>

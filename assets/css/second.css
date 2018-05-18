@@ -1,17 +1,5 @@
-label {
-   color: white;
-   font-family: 'Abel';
-   font-size: 1.2em;
-   padding: 7px;
-}
-input, textarea {
-   width: 80%;
-   border-radius: 5px;
-   padding: 5px;
-   background: transparent;
-}
-button {
-   padding: 5px;
+option {
+   color: black;
 }
 #keyholder, #superholder, #stuholder {
    list-style: none;
@@ -20,7 +8,8 @@ button {
 #keyholder li, #superholder li, #studentholder li {
    display: inline-block;
    background: #BDC3C7;
-   background: white;
+   background: transparent;
+   border: 1px solid;
    padding: .5%;
    border-radius: 2px;
    margin-right: .5%;
@@ -30,7 +19,4 @@ button {
    cursor: pointer;
    color: #943126;
    font-weight: bold;
-}
-.btn {
-   margin:1% 0;
 }
