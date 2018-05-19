@@ -11,7 +11,7 @@ $(document).ready(function(){
 				return;
 			}
 			for (var i=0; i<json.length; i++){
-				var div = '<div><div class="box"><div class="image fit"><img src="images/buku31.jpg" alt=""></div>';
+				var div = '<div><div class="box">';
 				div += '<div class="content">';
 				div += '<header class="align-center"><font>Category:</font><p>'+json[i].category+'</p>';
 				div += '<h2>'+json[i].title+'</h2></header>';

@@ -7,6 +7,7 @@ var bcrypt = require('bcrypt');
 var mongo = require('mongodb').MongoClient;
 var oid = require('mongodb').ObjectID;
 var multer = require('multer');
+var session = require('express-session');
 var text = require('pdf-text-extract');
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -21,6 +22,7 @@ var app = express();
 var db;
 
 //load .env file, creating port
+app.use(session({ secret: 'bajilobukeshukhermotobetha', resave: false, saveUninitialized: false }));
 app.use(express.static(__dirname + '/'));
 app.use(bp.urlencoded({ extended: false }));
 var port = process.env.PORT || 8080;
@@ -68,12 +70,16 @@ app.get('/showthesis', function(req, res){
 });
 
 app.get('/staffprofile', function(req, res){
-	res.sendFile(__dirname + '/views/staffprofile.html');
+	res.sendFile(__dirname + '/views/profilestaff.html');
 });
 
-app.get('/profile', function(req, res){
-	res.sendFile(__dirname + '/views/profile.html');
+app.get('/studentprofile', function(req, res){
+	res.sendFile(__dirname + '/views/profilestudent.html');
 });
+
+app.get('/facultyprofile', function(req, res){
+	res.sendFile(__dirname + '/views/profilefaculty.html');
+})
 
 app.get('/stat', function(req, res){
 	res.sendFile(__dirname + '/views/chart.html');
@@ -166,7 +172,7 @@ app.post('/li', function(req, res){
     var name = req.body.name;
     var pass = req.body.pass;
     if (isNaN(Number(name))){
-    	if (name=='naimul'){
+    	if (name=='staffnaimul'){
     		db.collection('staff').find({}).toArray(function(err, doc){
     			if (err)	res.send({error: err});
     			else res.send(doc[0]);
@@ -181,6 +187,7 @@ app.post('/li', function(req, res){
 		                if (e)  res.send({error:e});
 		                else if (ress==false) res.send({error:'wrongpass'});
 		                else if (ress==true) {
+		                	req.session.user=name;
 		                    res.send(doc[0]);
 		                }
 		            });
@@ -350,5 +357,97 @@ app.post('/chartinfo', function(req, res){
 			}
 			res.send(arrays);
 		}
+	})
+})
+
+app.post('/studentprofilepost', function(req, res){
+	var id = Number(req.body.id);
+	db.collection('students').find({_id: id}).project({password: 0}).toArray(function(err, doc){
+		if (err)	res.send({error: err});
+		else res.send(doc[0]);
+	})
+})
+
+app.post('/facultyprofilepost', function(req, res){
+	var id = req.body.id;
+	db.collection('faculties').find({_id: id}).project({password: 0}).toArray(function(err, doc){
+		if (err)	res.send({error: err});
+		else res.send(doc[0]);
+	})
+})
+
+app.post('/staffprofilepost', function(req, res){
+	var id = req.body.id;
+	db.collection('staff').find({_id: id}).project({password: 0}).toArray(function(err, doc){
+		if (err)	res.send({error: err});
+		else res.send(doc[0]);
+	})
+})
+
+app.post('/editstudentprofilepost', function(req, res){
+	var id = Number(req.body.id);
+	var name = req.body.name;
+	var status = req.body.status;
+	var level = Number(req.body.level);
+	var year = Number(req.body.year);
+	var phone = req.body.phone;
+	var email = req.body.email;
+	var obj = { name, phone, email };
+	if (status=='yes')	{ obj.current=true; obj.level = level; obj.year = ''; }
+	else { obj.current=false; obj.year = year; obj.level = ''; }
+	db.collection('students').update({_id: id}, { $set: obj }, function(err, doc){
+		if (err)	res.send({error: err});
+		else res.send({updated: true});
+	})
+})
+
+app.post('/editfacultyprofilepost', function(req, res){
+	var id = req.body.id;
+	var name = req.body.name;
+	var designation = req.body.designation;
+	var university = req.body.university;
+	var phone = req.body.phone;
+	var email = req.body.email;
+	var obj = { name, phone, email, designation, university };
+	db.collection('faculties').update({_id: id}, { $set: obj }, function(err, doc){
+		if (err)	res.send({error: err});
+		else res.send({updated: true});
+	})
+})
+
+app.post('/editstaffprofilepost', function(req, res){
+	var id = req.body.id;
+	var name = req.body.name;
+	var responsibility = req.body.resp;
+	var phone = req.body.phone;
+	var email = req.body.email;
+	var obj = { name, phone, email, responsibility };
+	db.collection('staff').update({_id: id}, { $set: obj }, function(err, doc){
+		if (err)	res.send({error: err});
+		else res.send({updated: true});
+	})
+})
+
+app.post('/changestudentpropicpost', upload.single('the-file'), function(req, res){
+	var id = Number(req.body.id);
+	db.collection('students').update({_id: id}, { $set: { picture: req.file.originalname } }, function(err, doc){
+		if (err)	res.send({error: err});
+		else res.redirect('/studentprofile');
+	})
+})
+
+app.post('/changefacultypropicpost', upload.single('the-file'), function(req, res){
+	var id = req.body.id;
+	db.collection('faculties').update({_id: id}, { $set: { picture: req.file.originalname } }, function(err, doc){
+		if (err)	res.send({error: err});
+		else res.redirect('/facultyprofile');
+	})
+})
+
+app.post('/changestaffpropicpost', upload.single('the-file'), function(req, res){
+	var id = req.body.id;
+	db.collection('staff').update({_id: id}, { $set: { picture: req.file.originalname } }, function(err, doc){
+		if (err)	res.send({error: err});
+		else res.redirect('/staffprofile');
 	})
 })
