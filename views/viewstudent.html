@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 	<head>
-		<title>Staff Profile</title>
+		<title>Student Profile</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" href="assets/css/main.css" />
@@ -29,7 +29,7 @@
 				<div class="inner">
 					<header class="align-center">
 						<p>Profile</p>
-						<h2 class="name">A M Shahed Hasan</h2>
+						<h2 class="name">A M</h2>
 					</header>
 				</div>
 			</section>
@@ -40,26 +40,15 @@
 					<div class="box row">
 						<div class='col-sm-3'>
 							<img class='image fit propic' style="height: 300px; width: 300px; margin: 10px;" src='/images/profile.png'>
-							<button class='button special picbtn'>Change</button>
-							<form name='picform' enctype="multipart/form-data" action='/changestaffpropicpost' method='POST'>
-								<input type='file' name='the-file' required>
-								<input type='submit' value='Change Profile Picture'>
-								<input type='hidden' name='id' value=''>
-							</form>
-							<button style="background: #B03A2E" class='button special cancelbtn2'>Cancel</button>
 						</div>
 						<div class='col-sm-9' style='margin: 5% 0'>
-							<font size='3' color='black'><b>Name: </b></font>
-							<input class='name2' type='text' value='' disabled><br>
-							<font size='3' color='black'><b>Responsibility: </b></font>
-							<input class='resp' type='text' value='' disabled><br>
-							<font size='3' color='black'><b>Phone: </b></font>
-							<input class='phone' type='text' value='01521498048' disabled><br>
-							<font size='3' color='black'><b>Email ID: </b>
-							</font><input class='email' type='text' value='amsh.himu@gmail.com' disabled><br>
-							<button class='button special editbtn'>Edit</button>
-							<button style="background: #1E8449" class='button special submitbtn'>Submit</button>
-							<button style="background: #B03A2E" class='button special cancelbtn'>Cancel</button>
+							<font size='3' color='black' class='id'><b>ID: </b></font><br>
+							<font size='3' color='black' class='name2'><b>Name: </b></font><br>
+							<font size='3' color='black' class='status'><b>Status: </b></font><br>
+							<font size='3' color='black' class='level'><b>Level: </b></font><br>
+							<font size='3' color='black' class='year'><b>Passing Year: </b></font><br>
+							<font size='3' color='black' class='phone'><b>Phone: </b></font><br>
+							<font size='3' color='black' class='email'><b>Email ID: </b></font><br>
 						</div>
 					</div>
 				</div>
@@ -87,7 +76,7 @@
 			<script src="assets/js/skel.min.js"></script>
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
-			<script src='assets/js/profilestaff.js'></script>
+			<script src='assets/js/viewstudent.js'></script>
 
 	</body>
 </html>

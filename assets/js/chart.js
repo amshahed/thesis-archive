@@ -28,7 +28,7 @@ function drawChart2(arr) {
 $(document).ready(function(){
 	$.ajax({
 		type: 'POST',
-		url: '/chartinfo',
+		url: '/statpost',
 		success: function(json){
 			console.log(json);
 			if (json.hasOwnProperty('error')){

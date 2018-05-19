@@ -102,7 +102,7 @@ function processForm(){
 	}
 	$.ajax({
 		type: 'POST',
-		url: '/theinfo',
+		url: '/addthesispost',
 		data: { title:title, keys:JSON.stringify(keyarr), sv:JSON.stringify(superarr), students:JSON.stringify(studentarr) },
 		success: function(json){
 			if (json.hasOwnProperty('error'))

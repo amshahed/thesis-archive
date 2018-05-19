@@ -321,7 +321,7 @@ function search(){
 	$.ajax({
 		type: 'POST',
 		data: { val },
-		url: '/search',
+		url: '/searchpost',
 		success: function(json){
 			if (json.hasOwnProperty('error')){
 				toastr.error(json.error, '', {timeOut: 1300});

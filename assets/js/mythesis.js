@@ -1,8 +1,11 @@
 $(document).ready(function(){
-	var name = localStorage.getItem('name');
+	var id = localStorage.getItem('id');
+	if (id=='' || id==null)
+		window.open('/', '_self');
 	$.ajax({
 		type: 'POST',
-		url: '/thesislistpost',
+		data: { id },
+		url: '/mythesispost',
 		success: function(json){
 			if (json.hasOwnProperty('error')){
 				toastr.error(json.error, '', {timeOut: 1300});
@@ -17,10 +20,15 @@ $(document).ready(function(){
 				div += '<h4 style="margin-bottom:2px"><strong>Authors</strong></h4>';
 				div += '<h5 class="pull-right">'+json[i].supervisor[1]+'</h5>';
 				div += '<h5>'+json[i].authors[1]+'<br>'+json[i].authors[3]+'<br>'+json[i].authors[5]+'</h5>';
-				div += '<footer class="align-center"><a href="/showthesis?id='+json[i]._id+'" class="button alt">Learn More</a></footer>';
+				div += '<footer class="align-center"><a href="/editthesis?id='+json[i]._id+'" class="button alt">Edit Thesis</a></footer>';
 				div += '</div></div></div>';
 				$('.thesiswrapper').append(div);
 			}
 		}
 	})
 })
+
+function logout(){
+	localStorage.clear();
+	window.open('/', '_self');
+}

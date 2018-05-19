@@ -1,4 +1,6 @@
 
+var theid = '';
+
 function getQueryString(field, url){
 	var href = url ? url : window.location.href;
 	var reg = new RegExp( '[?&]' + field + '=([^&#]*)', 'i' );
@@ -10,7 +12,7 @@ $(document).ready(function(){
 	var id = getQueryString('id');
 	$.ajax({
 		type: 'POST',
-		url: '/getinfo',
+		url: '/showthesispost',
 		data: { id:id },
 		success: function(json){
 			if (json.hasOwnProperty('error')){
@@ -24,10 +26,11 @@ $(document).ready(function(){
 				$('.category').html(json.category);
 				$('.abstract').html(json.abstract);
 				$('.supervisor').html(json.supervisor[1]);
-				$('.authors').html(json.authors[1]+'<br>'+json.authors[3]+'<br>'+json.authors[5]);
-				$('.keys').html(json.keywords[0]);
-				for (var i=1; i<json.keywords.length; i++)
-					$('.keys').append(', '+json.keywords[i]);
+				theid = json.supervisor[0];
+				$('.authors').append('<span style="cursor:pointer" onclick=\'location.href="/viewstudent?id='+json.authors[0]+'"\'>'+json.authors[1]+'</span><br>');
+				$('.authors').append('<span style="cursor:pointer" onclick=\'location.href="/viewstudent?id='+json.authors[2]+'"\'>'+json.authors[3]+'</span><br>');
+				$('.authors').append('<span style="cursor:pointer" onclick=\'location.href="/viewstudent?id='+json.authors[4]+'"\'>'+json.authors[5]+'</span>');
+				$('.keys').html(json.keywords.join(', '));
 				$('.location').html('Shelf '+json.location.shelf+', Row '+json.location.row);
 				if (json.publishInfo.isPublished==true){
 					$('.pub').html(json.publishInfo.publication);
@@ -42,3 +45,7 @@ $(document).ready(function(){
 		}
 	});
 });
+
+function viewProfile(){
+	window.location.replace('/viewfaculty?id='+theid);
+}

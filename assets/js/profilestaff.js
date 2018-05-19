@@ -68,13 +68,7 @@ $('.submitbtn').click(function(){
 })
 
 $('.cancelbtn').click(function(){
-	$('.editbtn').show();
-	$('.submitbtn').hide();
-	$('.cancelbtn').hide();
-	$('.name2').prop('disabled', true);
-	$('.phone').prop('disabled', true);
-	$('.email').prop('disabled', true);
-	$('.resp').prop('disabled', true);
+	location.reload();
 })
 
 $('.picbtn').click(function(){

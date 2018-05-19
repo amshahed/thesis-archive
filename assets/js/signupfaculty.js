@@ -29,7 +29,7 @@ function sendForm(){
 	$.ajax({
 		type : 'POST',
 		data : { name, rank, dept, varsity, phone, email, id, pass },
-		url : '/suf',
+		url : '/signupfacultypost',
 		success : function(json){
 			if (json.hasOwnProperty('error')){
 				toastr.error(json.error, '', {timeOut: 1300});

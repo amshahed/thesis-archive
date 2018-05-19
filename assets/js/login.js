@@ -93,7 +93,7 @@ function login(){
     $.ajax({
         type: 'POST',
         data: { name, pass },
-        url: '/li',
+        url: '/loginpost',
         success: function(json){
             if (json.hasOwnProperty('error')){
                 if (json.error=='nouser')
