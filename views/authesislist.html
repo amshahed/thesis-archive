@@ -1,11 +1,11 @@
 <!DOCTYPE HTML>
 <html>
 	<head>
-		<title>Thesis Statistics</title>
+		<title>Thesis List</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" href="assets/css/main.css" />
-	    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 	</head>
 	<body class="subpage">
 
@@ -19,22 +19,25 @@
 			<nav id="menu">
 				<ul class="links">
 					<li><a href="/">Home</a></li>
-					<li><a href='/thesislist'>Thesis List</a></li>
+					<li><a href='/stat'>Thesis Statistics</a></li>
+					<li><a href="/profile">Profile</a></li>
+					<li><a href='/logout'>Log Out</a></li>
 				</ul>
 			</nav>
 
 		<!-- One -->
+			<section id="One" class="wrapper style3">
+				<div class="inner">
+					<header class="align-center">
+						<h2 class="thesis_title">Thesis List</h2>
+					</header>
+				</div>
+			</section>
 
 		<!-- Two -->
-			<section id="two" class="wrapper style2">
+			<section id="one" class="wrapper style2">
 				<div class="inner">
-					<div class="box">
-						<div id='chartholder1'>
-
-						</div>
-						<div id='chartholder2'>
-
-						</div>
+					<div class="grid-style thesiswrapper">
 					</div>
 				</div>
 			</section>
@@ -55,14 +58,13 @@
 			</footer>
 
 		<!-- Scripts -->
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 			<script src="assets/js/jquery.min.js"></script>
 			<script src="assets/js/jquery.scrollex.min.js"></script>
 			<script src="assets/js/skel.min.js"></script>
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
-			<script src="https://www.google.com/jsapi"></script>
-			<script src="assets/js/chart.js"></script>
-
+			<script src="assets/js/thesislist.js"></script>
 
 	</body>
 </html>

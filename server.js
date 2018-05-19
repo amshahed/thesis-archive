@@ -40,7 +40,10 @@ mongo.connect('mongodb://127.0.0.1/', function(err, client){
 
 //render hoome page
 app.get('/', function(req, res){
-	res.sendFile(__dirname + '/views/index.html')
+	if (req.session.user)
+		res.redirect('/thesislist');
+	else
+		res.sendFile(__dirname + '/views/index.html')
 });
 
 app.get('/signupstudent', function(req, res){
@@ -57,7 +60,10 @@ app.get('/login', function(req, res){
 });
 
 app.get('/thesislist', function(req, res){
-	res.sendFile(__dirname + '/views/thesis_list.html');
+	if (req.session.user)
+		res.sendFile(__dirname + '/views/authesislist.html');
+	else
+		res.sendFile(__dirname + '/views/unthesislist.html');
 });
 
 //render page for adding new thesis
@@ -72,24 +78,35 @@ app.get('/showthesis', function(req, res){
 	res.sendFile(__dirname + '/views/thesis_details.html');
 });
 
-app.get('/staffprofile', function(req, res){
-	if (req.session.user=='staffnaimul')
-		res.sendFile(__dirname + '/views/profilestaff.html');
-	else
-		res.redirect('/');
-});
+// app.get('/staffprofile', function(req, res){
+// 	if (req.session.user=='staffnaimul')
+// 		res.sendFile(__dirname + '/views/profilestaff.html');
+// 	else
+// 		res.redirect('/');
+// });
 
-app.get('/studentprofile', function(req, res){
-	if (req.session.user!='' && !isNaN(Number(req.session.user)))
+// app.get('/studentprofile', function(req, res){
+// 	if (req.session.user!=undefined && !isNaN(Number(req.session.user)))
+// 		res.sendFile(__dirname + '/views/profilestudent.html');
+// 	else
+// 		res.redirect('/');
+// });
+
+// app.get('/facultyprofile', function(req, res){
+// 	if (req.session.user!=undefined && isNaN(Number(req.session.user) && req.session.user!='staffnaimul')
+// 		res.sendFile(__dirname + '/views/profilefaculty.html');
+// 	else 
+// 		res.redirect('/');
+// })
+
+app.get('/profile', function(req, res){
+	if (req.session.user && !isNaN(Number(req.session.user)))
 		res.sendFile(__dirname + '/views/profilestudent.html');
-	else
-		res.redirect('/');
-});
-
-app.get('/facultyprofile', function(req, res){
-	if (req.session.user!='' && isNaN(Number(req.session.user) && req.session.user!='staffnaimul'))
+	else if (req.session.user=='staffnaimul')
+		res.sendFile(__dirname + '/views/profilestaff.html');
+	else if (req.session.user && isNaN(Number(req.session.user)) && req.session.user!='staffnaimul')
 		res.sendFile(__dirname + '/views/profilefaculty.html');
-	else
+	else if (!req.session.user)
 		res.redirect('/');
 })
 
@@ -102,7 +119,7 @@ app.get('/mythesis', function(req, res){
 })
 
 app.get('/editthesis', function(req, res){
-	if (req.session.user!='' && req.session.user!='staffnaimul')
+	if (req.session.user!=undefined && req.session.user!='staffnaimul')
 		res.sendFile(__dirname + '/views/editthesis.html');
 	else
 		res.redirect('/');
@@ -195,7 +212,17 @@ app.post('/loginpost', function(req, res){
     	if (name=='staffnaimul'){
     		db.collection('staff').find({}).toArray(function(err, doc){
     			if (err)	res.send({error: err});
-    			else res.send(doc[0]);
+		        else if (doc.length==0)  res.send({error:'nouser'});
+		        else {
+		            bcrypt.compare(pass, doc[0].password, function(e, ress){
+		                if (e)  res.send({error:e});
+		                else if (ress==false) res.send({error:'wrongpass'});
+		                else if (ress==true) {
+		                	req.session.user=name;
+		                    res.send(doc[0]);
+		                }
+		            });
+		       	}
     		})
     	}
     	else {
@@ -208,7 +235,6 @@ app.post('/loginpost', function(req, res){
 		                else if (ress==false) res.send({error:'wrongpass'});
 		                else if (ress==true) {
 		                	req.session.user=name;
-		                	console.log(req.session.user);
 		                    res.send(doc[0]);
 		                }
 		            });
@@ -226,7 +252,6 @@ app.post('/loginpost', function(req, res){
 	                else if (ress==false) res.send({error:'wrongpass'});
 	                else if (ress==true) {
 	                	req.session.user=name;
-	                	console.log(req.session.user);
 	                    res.send(doc[0]);
 	                }
 	            });
@@ -264,14 +289,25 @@ app.post('/supercheck', function(req, res){
 app.post('/thesislistpost', function(req, res){
 	var obj = {abstract:0, isIssued:0, year:0, by:0, 
 		pdf:0, keywords:0, location:0, publishInfo:0 };
-	db.collection('theses').find({}).project(obj).toArray(function(err, doc){
-		if (err)
-			res.send({error: err});
-		else {
-			res.send(doc);
-		}
-	});
-});
+	if (req.session.user){
+		db.collection('theses').find({}).project(obj).toArray(function(err, doc){
+			if (err)
+				res.send({error: err});
+			else {
+				res.send(doc);
+			}
+		})
+	}
+	else {
+		db.collection('theses').find({ 'publishInfo.isPublished' : true }).project(obj).toArray(function(err, doc){
+			if (err)
+				res.send({error: err});
+			else {
+				res.send(doc);
+			}
+		})
+	}
+})
 
 app.post('/mythesispost', function(req, res){
 	var id = req.body.id;
