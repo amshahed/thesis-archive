@@ -1,0 +1,140 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Search Result</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<link rel="stylesheet" href="assets/css/search.css" />		
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+	</head>
+	<body class="subpage">
+
+		<!-- Header -->
+			<header id="header">
+				<div class="logo">MIST CSE Thesis Archive</div>
+				<input type="text" name="query" id="query" value="" placeholder="Search" size="4" style="height:30px;width: 200px;display: inline-block;color: #ffe" />
+					<button onclick="search()" class="button special small icon fa-search">Search</button>
+				<a href="#menu">Menu</a>
+			</header>
+
+		<!-- Nav -->
+			<nav id="menu">
+				<ul class="links">
+					<li><a href="/">Home</a></li>
+					<li><a href='/thesislist'>Thesis List</a></li>
+				</ul>
+			</nav>
+
+			
+			
+		<!-- One -->
+			<section id="One" class="wrapper style3">
+				<div class="inner">
+					<header class="align-center">
+					    <h2 class="thesis_title">Search Result for <span class='val'>X</span></h2>
+					</header>
+				</div>
+			</section>
+
+			<div class="sidenav">
+				<br><br><br>
+				<div style="width: 180px" >
+					<div class="select-wrapper">
+						<select name="Supervisors" class="supervisor" style="color: #fff;">
+							<option value="">- Supervisor -</option>
+						</select>
+					</div>
+				</div>
+					<br>
+					<div style="width: 180px" >
+					<div class="select-wrapper">
+						<select name="Categories" class="category" style="color: #fff;">
+							<option value="">- Category -</option>
+						</select>
+					</div>
+				</div>
+					<br>
+				<div style="width: 180px">
+					<div class="select-wrapper">
+						<select name="batch" class="batch" style="color: #fff">
+							<option value="">- Batch -</option>
+						</select>
+					</div>
+				</div> <br>
+				<div align="left">
+					<input type="text" name="title" class="title" value="" placeholder="Title" style="width: 180px;color: #fff; margin-bottom: 8px;"/>
+				</div>
+				<div align="left">
+					<input type="number" name="id" class="id" value="" placeholder="Student ID" style="width: 180px;color: #fff; margin-bottom: 8px;"/>
+				</div>
+				<div align="left">
+					<input type="text" name="name" class="name" value="" placeholder="Student Name" style="width: 180px;color: #fff; margin-bottom: 8px;" />
+				</div>
+				<div align="left">
+					<input type="text" name="keyword" class="keyword" value="" placeholder="Keyword" style="width: 180px;color: #fff; margin-bottom: 8px;" />
+				</div>
+				<button class='button special' onclick='advancedSearch()'>Apply</button>
+  				
+			</div>
+
+
+		<!-- Two -->
+		<br>
+			<section id="one" class="wrapper style2"><br>
+				<div class="inner">
+					<div class="grid-style thesiswrapper">
+<!-- CORRECT Box start-->
+<!-- 						<div>
+							<div class="box" id="left_box" >
+								
+								<div class="content">
+									<header class="align-center">
+										<font color="111">Category:</font><p>Artificial Intelligence</p>
+										<h2>Machine learning in education</h2>
+									</header>
+									<h4 style="margin-bottom:2px" class="pull-right"><strong>Supervisor</strong></h4>
+									<h4 style="margin-bottom:2px"><strong>Authors</strong></h4>
+									<h5 class="pull-right">Prof. Dr Syed Aktar</h5>
+									<h5>A M Shahed Hasan<br>Taani Hossain<br>Tasnia Muna</h5>
+									<footer class="align-center">
+										<a href="/thesis_details.html" class="button alt">Learn More</a>
+									</footer>
+								</div>
+							</div>
+						</div> -->
+								
+							
+<!-- *** ** * * * * * * * * * CORRECT Box END **************-->
+
+
+					</div>
+				</div><br>
+			</section>
+
+		<!-- Footer -->
+			<footer id="footer">
+				<div class="container">
+					<ul class="icons">
+						<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+						<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+						<li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
+						<li><a href="#" class="icon fa-envelope-o"><span class="label">Email</span></a></li>
+					</ul>
+				</div>
+				<div class="copyright">
+					&copy; Untitled. All rights reserved.
+				</div>
+			</footer>
+
+		<!-- Scripts -->
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/skel.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+			<script src="assets/js/search.js"></script>
+
+	</body>
+</html>

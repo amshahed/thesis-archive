@@ -35,69 +35,49 @@ mongo.connect('mongodb://127.0.0.1/', function(err, client){
 	//listen to port
 	app.listen(port, function(){
 		console.log('listening on port '+port);
-	});
-});
+	})
+})
 
-//render hoome page
 app.get('/', function(req, res){
 	if (req.session.user)
 		res.redirect('/thesislist');
 	else
 		res.sendFile(__dirname + '/views/index.html')
-});
+})
 
 app.get('/signupstudent', function(req, res){
 	res.sendFile(__dirname + '/views/sign_up_student.html');
-});
+})
 
 app.get('/signupfaculty', function(req, res){
 	res.sendFile(__dirname + '/views/sign_up_faculty.html');
-});
+})
 
-//render log in page
 app.get('/login', function(req, res){
 	res.sendFile(__dirname + '/views/login.html');
-});
+})
 
 app.get('/thesislist', function(req, res){
-	if (req.session.user)
-		res.sendFile(__dirname + '/views/authesislist.html');
+	if (req.session.user=='staffnaimul')
+		res.sendFile(__dirname + '/views/thesisliststaff.html');
+	else if (req.session.user && !isNaN(Number(req.session.user)))
+		res.sendFile(__dirname + '/views/thesisliststudent.html');
+	else if (req.session.user)
+		res.sendFile(__dirname + '/views/thesislistfaculty.html');
 	else
 		res.sendFile(__dirname + '/views/unthesislist.html');
-});
+})
 
-//render page for adding new thesis
 app.get('/addthesis', function(req, res){
 	if (req.session.user=='staffnaimul')	
 		res.sendFile(__dirname + '/views/addthesis.html');
 	else	
 		res.redirect('/');
-});
+})
 
 app.get('/showthesis', function(req, res){
 	res.sendFile(__dirname + '/views/thesis_details.html');
-});
-
-// app.get('/staffprofile', function(req, res){
-// 	if (req.session.user=='staffnaimul')
-// 		res.sendFile(__dirname + '/views/profilestaff.html');
-// 	else
-// 		res.redirect('/');
-// });
-
-// app.get('/studentprofile', function(req, res){
-// 	if (req.session.user!=undefined && !isNaN(Number(req.session.user)))
-// 		res.sendFile(__dirname + '/views/profilestudent.html');
-// 	else
-// 		res.redirect('/');
-// });
-
-// app.get('/facultyprofile', function(req, res){
-// 	if (req.session.user!=undefined && isNaN(Number(req.session.user) && req.session.user!='staffnaimul')
-// 		res.sendFile(__dirname + '/views/profilefaculty.html');
-// 	else 
-// 		res.redirect('/');
-// })
+})
 
 app.get('/profile', function(req, res){
 	if (req.session.user && !isNaN(Number(req.session.user)))
@@ -133,6 +113,10 @@ app.get('/viewfaculty', function(req, res){
 	res.sendFile(__dirname + '/views/viewfaculty.html');
 })
 
+app.get('/search', function(req, res){
+	res.sendFile(__dirname + '/views/search.html');
+})
+
 app.post('/signuppost', function(req, res){
 	var name = req.body.name;
 	var id = Number(req.body.id);
@@ -144,7 +128,6 @@ app.post('/signuppost', function(req, res){
 	var email = req.body.email;
 	var pass = req.body.pass;
 
-    //hash password before saving
 	bcrypt.hash(pass, 5, function (err, hash){
     	if (err)	res.send({error : 'nohash'});
         else {
@@ -157,7 +140,6 @@ app.post('/signuppost', function(req, res){
                     else {
                         var obj = { _id:id, name:name, current:cur, 
                         	year:year, level:level, phone:phone, email:email, password:pass };
-                        //if doesn't exist, save in db
                         db.collection('students').insert(obj, function(e, docu){
                             if (e)  res.send({error : e});
                             else res.send({ inserted: true });
@@ -178,7 +160,7 @@ app.post('/signupfacultypost', function(req, res){
 	var phone = req.body.phone;
 	var email = req.body.email;
 	var pass = req.body.pass;
-    //hash password before saving
+
 	bcrypt.hash(pass, 5, function (err, hash){
     	if (err)	res.send({error : 'nohash'});
         else {
@@ -192,7 +174,6 @@ app.post('/signupfacultypost', function(req, res){
                         var obj = { _id:id, name:name, designation:rank, department: dept, 
                         	university: varsity, phone:phone, email:email, password:pass };
                         
-                        //if doesn't exist, save in db
                         db.collection('faculties').insert(obj, function(e, docu){
                             if (e)  res.send({error : e});
                             else res.send({ inserted: true });
@@ -204,7 +185,6 @@ app.post('/signupfacultypost', function(req, res){
   	});
 });
 
-//existing user's login
 app.post('/loginpost', function(req, res){
     var name = req.body.name;
     var pass = req.body.pass;
@@ -265,7 +245,7 @@ app.get('/logout', function(req, res){
 		if (err)	res.send({error: err});
 		else res.redirect('/');
 	});
-});
+})
 
 app.post('/studentcheck', function(req, res){
 	var id = Number(req.body.id);
@@ -285,7 +265,6 @@ app.post('/supercheck', function(req, res){
 	})
 })
 
-//show thesis list
 app.post('/thesislistpost', function(req, res){
 	var obj = {abstract:0, isIssued:0, year:0, by:0, 
 		pdf:0, keywords:0, location:0, publishInfo:0 };
@@ -338,7 +317,10 @@ app.post('/showthesispost', function(req, res){
 	db.collection('theses').find({_id: oid(id)}).toArray(function(err, doc){
 		if (err)	res.send({error: err});
 		else if (doc.length==0)	res.send({error: 'nomatch'});
-		else res.send(doc[0]);
+		else {
+			doc[0].user = req.session.user;
+			res.send(doc[0]);
+		}
 	})
 })
 
@@ -384,31 +366,6 @@ app.get('/getpdf/:id', function(req, res){
 		else res.download(__dirname+'/papers/'+doc[0].pdf);
 	})
 })
-
-app.post('/searchpost', function(req, res){
-	var val = req.body.val.toLowerCase();
-	db.collection('theses').find({}).toArray(function(err, doc){
-		if (err)	res.send(err);
-		else {
-			var obj = { title: [], supervisor: [], authors: [], keywords: [], category: [], year: [], by: [] };
-			for (var i=0; i<doc.length; i++){
-				if (doc[i].title.toLowerCase().includes(val))
-					obj.title.push(doc[i]);
-				if (doc[i].supervisor[1].toLowerCase().includes(val))
-					obj.supervisor.push(doc[i]);
-				if (doc[i].keywords.toLowerCase().includes(val))
-					obj.keywords.push(doc[i]);
-				if (doc[i].category.toLowerCase()==val)
-					obj.category.push(doc[i]);
-				if (doc[i].year==Number(val))
-					obj.year.push(doc[i]);
-				if (doc[i].by==val)
-					obj.by.push(val);
-			}
-			res.send(obj);
-		}
-	})
-});
 
 app.post('/editthesispost', function(req, res){
 	var id = req.body.id;
@@ -561,5 +518,88 @@ app.post('/changestaffpropicpost', upload.single('the-file'), function(req, res)
 	db.collection('staff').update({_id: id}, { $set: { picture: req.file.originalname } }, function(err, doc){
 		if (err)	res.send({error: err});
 		else res.redirect('/staffprofile');
+	})
+})
+
+app.post('/searchpost', function(req, res){
+	var val = req.body.val;
+	val = val.toLowerCase();
+	db.collection('theses').find({}).project({ abstract:0, pdf:0 }).toArray(function(err, doc){
+		if (err)	res.send(err);
+		else {
+			var obj = [];
+			for (var i=0; i<doc.length; i++){
+				for (var j=0; j<doc[i].keywords.length; j++)
+					doc[i].keywords[j] = doc[i].keywords[j].toLowerCase();
+				for (var j=0; j<doc[i].authors.length; j+=2){
+					if (doc[i].authors[j]==Number(val))
+						obj.push(doc[i]);
+				}
+				if (doc[i].title.toLowerCase().includes(val) && !obj.includes(doc[i]))
+					obj.push(doc[i]);
+				if (doc[i].supervisor[1].toLowerCase().includes(val)  && !obj.includes(doc[i]))
+					obj.push(doc[i]);
+				if (doc[i].keywords.includes(val) && !obj.includes(doc[i]))
+					obj.push(doc[i]);
+				if (doc[i].category.toLowerCase()==val  && !obj.includes(doc[i]))
+					obj.push(doc[i]);
+				if (doc[i].year==Number(val)  && !obj.includes(doc[i]))
+					obj.push(doc[i]);
+				if ('cse '+doc[i].batch==val && !obj.includes(doc[i]))
+					obj.push(doc[i]);
+			}
+			res.send(obj);
+		}
+	})
+})
+
+app.post('/searchfieldpost', function(req, res){
+	var project = { designation:0, department:0, university:0, phone:0, email:0, password:0 };
+	var obj = { faculties: [], categories: [], batches: [] };
+	db.collection('faculties').find({}).project(project).toArray(function(err, doc){
+		if (err)	res.send({error: err});
+		else {
+			for (var i=0; i<doc.length; i++){
+				obj.faculties.push(doc[i]._id);
+				obj.faculties.push(doc[i].name);
+			}
+			var project = { _id:0, title:0, abstract:0, keywords:0, supervisor:0, authors:0,
+							  year:0, pdf:0, location:0, publishInfo:0, isIssued:0 };
+			db.collection('theses').find({}).project(project).toArray(function(err, doc){
+				if (err)	res.send({error: err});
+				else {
+					for (var i=0; i<doc.length; i++){
+						if (!obj.categories.includes(doc[i].category))
+							obj.categories.push(doc[i].category);
+						if (!obj.batches.includes(doc[i].batch))
+							obj.batches.push(doc[i].batch);
+					}
+					res.send(obj);
+				}
+			})
+		}
+	})
+})
+
+app.post('/advancedsearchpost', function(req, res){
+	var title = req.body.title;
+	var id = Number(req.body.id);
+	var name = req.body.name;
+	var keyword = req.body.keyword;
+	var supervisor = req.body.supervisor;
+	var category = req.body.category;
+	var batch = Number(req.body.batch);
+	console.log(title+' '+id+' '+name+' '+keyword+' '+supervisor+' '+category+' '+batch);
+	var obj= {};
+	if (title!='')	obj.title = { $regex: title, $options: 'i' };
+	if (id!='')		obj.authors = id;
+	if (name!='')	obj.authors = { $regex: name, $options: 'i' };
+	if (keyword!='')	obj.keywords = keyword;
+	if (supervisor!='')	obj.supervisor = supervisor;
+	if (category!='')	obj.category = category;
+	if (batch!='')	obj.batch = 15;
+	db.collection('theses').find(obj).project({ abstract:0, pdf:0 }).toArray(function(err, doc){
+		if (err)	res.send({error: err});
+		else res.send(doc);
 	})
 })

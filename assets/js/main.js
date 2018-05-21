@@ -318,16 +318,5 @@ function search(){
 	var val = $('#searchval').val();
 	if (val=='')	return;
 	$('#searchval').val('');
-	$.ajax({
-		type: 'POST',
-		data: { val },
-		url: '/searchpost',
-		success: function(json){
-			if (json.hasOwnProperty('error')){
-				toastr.error(json.error, '', {timeOut: 1300});
-				return;
-			}
-			console.log(json);
-		}
-	});
+	window.open('/search?val='+val, '_self');
 }

@@ -4,7 +4,7 @@ function getQueryString(field, url){
 	var reg = new RegExp( '[?&]' + field + '=([^&#]*)', 'i' );
 	var string = reg.exec(href);
 	return string ? string[1] : null;
-};
+}
 
 $(document).ready(function(){
 	var id = getQueryString('id');
@@ -39,7 +39,7 @@ $(document).ready(function(){
 			}
 		}
 	});
-});
+})
 
 $('.editbtn').click(function(){
 	$('.editbtn').hide();

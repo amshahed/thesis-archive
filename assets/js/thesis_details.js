@@ -40,7 +40,10 @@ $(document).ready(function(){
 					$('.pub').html('N/A');
 					$('.pub_date').html('N/A');
 				}
-				$('.pdflink').attr('href','/getpdf/'+json._id);
+				if (json.user)
+					$('.pdflink').attr('href','/getpdf/'+json._id);
+				else
+					$('.pdflink').hide();
 			}
 		}
 	});
