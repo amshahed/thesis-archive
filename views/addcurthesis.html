@@ -1,0 +1,74 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Add Current Thesis</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<link rel="stylesheet" href="assets/css/second.css" />
+	  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+ 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+	</head>
+	<body class="subpage">
+
+		<!-- Header -->
+			<header id="header">
+				<div class="logo">MIST CSE Thesis Archive</div>
+				<a href="#menu">Menu</a>
+			</header>
+
+		<!-- Nav -->
+			<nav id="menu">
+				<ul class="links">
+					<li><a href="/">Home</a></li>
+					<li><a href="/profile">Profile</a></li>
+					<li><a href="/thesislist">Thesis List</a></li>
+				</ul>
+			</nav>
+
+		<!-- One -->
+			<section id="One" class="wrapper style3">
+				<div class="inner">
+					<header class="align-center">
+						<p ></p>
+						<h2>Add Current Thesis</h2>
+					</header>
+				</div>
+			</section>
+
+		<!-- Two -->
+			<section id="two" class="wrapper style3">
+				<div class="inner">									
+					<div class='signup'>
+						<font size="3">Thesis Title</font><br>
+						<input type='text' id='title' placeholder="Enter the title of the thesis" required><br>
+						<font size='3'>Category</font><br>
+						<input type='text' id='category' placeholder="Enter the category of the thesis" required><br>
+						<font size="3">Supervisor</font><br>
+						<input style="width:93%; display:inline-block;" type='text' placeholder="Enter the name of supervisor" id='super'>
+						<button onclick="addSupervisor()" style="opacity: .7;" type='button'>add</button>
+						<ul id='superholder'></ul>
+						<font size="3">Authors(2 other authors must be added)</font><br>
+						<input style="width:93%; display:inline-block;" type='number' placeholder="Enter ID of author" id='student'>
+						<button onclick="addStudent()" style="opacity: .7;" type='button'>add</button>
+						<ul id='studentholder'></ul>
+						<button class='button special' onclick='addCurrentThesis()'>Add Current Thesis</button>
+		   			</div>
+        		</div>
+			</section>
+
+		<!-- Scripts -->
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+			<script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+			<script src="//cdnjs.cloudflare.com/ajax/libs/jquery.form/3.51/jquery.form.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/skel.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+			<script src="assets/js/addcurthesis.js"></script>
+
+	</body>
+</html>
+
+
+
