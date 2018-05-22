@@ -772,3 +772,26 @@ app.post('/issuepost', function(req, res){
 		else res.send(doc);
 	})
 })
+
+app.post('/addissue', function(req, res){
+	var title = req.body.title;
+	var student = Number(req.body.student);
+	var code = req.body.code;
+	var date = req.body.date;
+	db.collection('theses').find({'location.code':code}).toArray(function(err, doc){
+		if (err)	res.send({error: err});
+		else if (doc.length==0)	res.send({error: 'nomatch'});
+		else if (doc[0].isIssued==true) res.send({error: 'issued'});
+		else {
+			db.collection('issues').insert({ code, title, student, date, returned:false, retdate:'' }, function(err, doc){
+				if (err)	res.send({error: err});
+				else {
+					db.collection('theses').update({'location.code':code}, { $set: { isIssued:true } }, function(err, doc){
+						if (err)	res.send({error: err});
+						else res.send({inserted:true});
+					})
+				}
+			})
+		}
+	})
+})

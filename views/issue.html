@@ -20,6 +20,8 @@
 				<ul class="links">
 					<li><a href="/">Home</a></li>
 					<li><a href="/profile">Profile</a></li>
+					<li><a href='/addthesis'>Add Thesis</a></li>
+					<li><a href='/logout'>Log Out</a></li>
 				</ul>
 			</nav>
 
@@ -58,6 +60,14 @@
 												<td><strong>Returned Date</strong></td>
 											</tr>
 											<tr>
+												<td><input type="text" id="title"></td>
+												<td><input type="text" id="code"></td>
+												<td><input type="text" id="id"></td>
+												<td><input type="date" id="date"></td>
+												<td><input type="checkbox" id="returned" disabled><label></label></td>
+												<td><input type="date" id="retdate" disabled></td>
+											</tr>
+<!-- 											<tr>
 												<td>Problems with machine lerning blah blah mkfvkfdnv kfmvkdjnv jdfnkdsj</td>
 												<td>00999</td>
 												<td>29.99</td>
@@ -67,46 +77,13 @@
 											<label for="copy"></label>
 										</div></td>
 												<td><input type="date" name="Ret_date"></td>
-											</tr>
-											<tr>
-												<td>Item 1</td>
-												<td>00999</td>
-												<td>29.99</td>
-												<td>29.99</td>
-												<td><input type="checkbox" name=""><label></label>
-											</td>
-												<td><input type="date" name="Ret_date"></td>
-											</tr>
-											<tr>
-												<td>Item 1</td>
-												<td>00999</td>
-												<td>29.99</td>
-												<td>29.99</td>
-												<td><input type="checkbox" name=""><label></label></td>
-												<td><input type="date" name="Ret_date"></td>
-											</tr>
-											<tr>
-												<td>Item 1</td>
-												<td>00999</td>
-												<td>29.99</td>
-												<td>29.99</td>
-												<td><input type="checkbox" name=""><label></label></td>
-												<td><input type="date" name="Ret_date"></td>
-											</tr>
-											<tr>
-												<td><input type="text" name="title"></td>
-												<td><input type="text" name="code"></td>
-												<td><input type="text" name="code"></td>
-												<td><input type="date" name="issue"></td>
-												<td><input type="checkbox" name=""><label></label></td>
-												<td><input type="date" name="Ret_date"></td>
-											</tr>
+											</tr> -->
 										</tbody>
 
 									</table>
 								</div>
 
-						<a href="" class="button special" >Issue a new Thesis</a><br>
+						<a href="" class="button special" onclick='newThesis()'>Issue a new Thesis</a><br>
 
 
 						<a href="" class="button special" >Submit</a><br>
