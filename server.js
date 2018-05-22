@@ -124,6 +124,27 @@ app.get('/addcurthesis', function(req, res){
 		res.redirect('/thesislist');
 })
 
+app.get('/mycurthesis', function(req, res){
+	if (req.session.user && req.session.user!='staffnaimul' && isNaN(Number(req.session.user)))
+		res.sendFile(__dirname + '/views/mycurrentthesis.html');
+	else 
+		res.redirect('/');
+})
+
+app.get('/editcurthesisstudent', function(req, res){
+	if (req.session.user && !isNaN(Number(req.session.user)))
+		res.sendFile(__dirname + '/views/editcurthesisstudent.html');
+	else
+		res.redirect('/');
+})
+
+app.get('/editcurthesissupervisor', function(req, res){
+	if (req.session.user && req.session.user!='staffnaimul' && isNaN(Number(req.session.user)))
+		res.sendFile(__dirname + '/views/editcurthesissupervisor.html');
+	else
+		res.redirect('/');
+})
+
 app.post('/signuppost', function(req, res){
 	var name = req.body.name;
 	var id = Number(req.body.id);
@@ -678,25 +699,61 @@ app.post('/addcurthesispost', function(req, res){
 	db.collection('curthesis').insert({title,category,supervisor,authors:students, updates:[]}, function(err, doc){
 		if (err)	res.send({error: err});
 		else {
-			var id = doc.ops[0]._id;
-			db.collection('students').update({ _id: students[0] }, { $set: { curthesis: id } }, function(err, doc){
+			res.send({added:true});
+		}
+	})
+})
+
+app.post('/mycurthesispost', function(req, res){
+	var id = req.session.user;
+	db.collection('curthesis').find({ supervisor:id }).toArray(function(err, doc){
+		if (err)	res.send({error: err});
+		else res.send(doc);
+	})
+})
+
+app.post('/editcurthesisstudentpost', function(req, res){
+	db.collection('curthesis').find({authors:Number(req.session.user)}).toArray(function(err, doc){
+		if (err)	res.send({error: err});
+		else if (doc.length==0)	res.send({error: 'nomatch'});
+		else res.send(doc[0]);
+	})
+})
+
+app.post('/updatecurthesisstudent', function(req, res){
+	var id = req.body.id;
+	var edit = req.body.edit;
+	var author = req.body.name;
+	var date = new Date();
+	var date = date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear();
+	var obj = { author, date, edit, feedback: '' };
+	db.collection('curthesis').update({_id:oid(id)}, { $push: { updates: obj } }, function(err, doc){
+		if (err)	res.send({error: err});
+		else res.send({updated:true});
+	})
+})
+
+app.post('/editcurthesissupervisorpost', function(req, res){
+	var id = req.body.id;
+	db.collection('curthesis').find({_id: oid(id)}).toArray(function(err, doc){
+		if (err)	res.send({error: err});
+		else if (doc.length==0)	res.send({error: 'nomatch'});
+		else res.send(doc[0]);
+	})
+})
+
+app.post('/updatecurthesissupervisor', function(req, res){
+	var id = req.body.id;
+	var feedback = req.body.feedback;
+	db.collection('curthesis').find({_id:oid(id)}).toArray(function(err, doc){
+		if (err)	res.send({error: err});
+		else if (doc.length==0)	res.send({error: 'nomatch'});
+		else {
+			var arr = doc[0].updates;
+			arr[arr.length-1].feedback += feedback;
+			db.collection('curthesis').update({_id:oid(id)}, { $set: { updates : arr } }, function(err, doc){
 				if (err)	res.send({error: err});
-				else {
-					db.collection('students').update({_id: students[2]}, { $set: { curthesis: id }}, function(err, doc){
-						if (err)	res.send({error: err});
-						else {
-							db.collection('students').update({_id: students[4]}, { $set: { curthesis: id } }, function(err, doc){
-								if (err)	res.send({error: err});
-								else {
-									db.collection('faculties').update({_id:supervisor[0]}, { $push: { curthesis: id } }, function(err, doc){
-										if (err)	res.send({error: err});
-										else res.send({added:true});
-									})
-								}
-							})
-						}
-					})
-				}
+				else res.send({updated:true});
 			})
 		}
 	})
