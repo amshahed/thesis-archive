@@ -104,3 +104,9 @@ $('.cancelbtn2').click(function(){
 	$('.picbtn').show();
 })
 
+function search(){
+	var val = $('#searchval').val();
+	if (val=='')	return;
+	$('#searchval').val('');
+	window.open('/search?val='+val, '_self');
+}

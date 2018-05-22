@@ -24,3 +24,10 @@ $(document).ready(function(){
 		}
 	})
 })
+
+function search(){
+	var val = $('#searchval').val();
+	if (val=='')	return;
+	$('#searchval').val('');
+	window.open('/search?val='+val, '_self');
+}
