@@ -145,6 +145,13 @@ app.get('/editcurthesissupervisor', function(req, res){
 		res.redirect('/');
 })
 
+app.get('/issue', function(req, res){
+	if (req.session.user=='staffnaimul')
+		res.sendFile(__dirname + '/views/issue.html');
+	else
+		res.redirect('/');
+})
+
 app.post('/signuppost', function(req, res){
 	var name = req.body.name;
 	var id = Number(req.body.id);
@@ -756,5 +763,12 @@ app.post('/updatecurthesissupervisor', function(req, res){
 				else res.send({updated:true});
 			})
 		}
+	})
+})
+
+app.post('/issuepost', function(req, res){
+	db.collection('issues').find({}).toArray(function(err, doc){
+		if (err)	res.send({error: err});
+		else res.send(doc);
 	})
 })
