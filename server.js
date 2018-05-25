@@ -777,7 +777,8 @@ app.post('/addissue', function(req, res){
 	var title = req.body.title;
 	var student = Number(req.body.student);
 	var code = req.body.code;
-	var date = req.body.date;
+	var date = new Date();
+	var date = date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear();
 	db.collection('theses').find({'location.code':code}).toArray(function(err, doc){
 		if (err)	res.send({error: err});
 		else if (doc.length==0)	res.send({error: 'nomatch'});
@@ -793,5 +794,15 @@ app.post('/addissue', function(req, res){
 				}
 			})
 		}
+	})
+})
+
+app.post('/returnissuepost', function(req, res){
+	var id = req.body.id;
+	var date = new Date();
+	var date = date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear();
+	db.collection('issues').update({_id: oid(id)}, { $set: { returned:true, retdate: date } }, function(err, doc){
+		if (err)	res.send({error :err});
+		else res.send({returned:true});
 	})
 })

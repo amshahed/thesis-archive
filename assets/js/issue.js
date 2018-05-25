@@ -1,5 +1,7 @@
 
 $(document).ready(function(){
+	$('.submitbtn').hide();
+	$('.cancelbtn').hide();
 	$.ajax({
 		type: 'post',
 		url: '/issuepost',
@@ -15,24 +17,59 @@ $(document).ready(function(){
 				div += '<td>'+json[i].date+'</td>';
 				div += '<td><div class="6u 12u$(small)">';
 				if (json[i].returned==false){
-					div += '<input type="checkbox" id="copy" onclick=\'returnThesis('+json[i]._id+')\' name="copy"><label for="copy"></label></div></td>';
-					div += '<td><input type="date" name="retdate" id="retdate"></td></tr>';
+					div += '<input type="checkbox" id="'+json[i]._id+'" onclick=\'returnThesis("'+json[i]._id+'")\'><label for="'+json[i]._id+'"></label></div></td>';
+					div += '<td></td></tr>';
 				}
 				else {
-					div += '<input type="checkbox" checked disabled id="copy" name="copy"><label for="copy"></label></div></td>';
-					div += '<td><input type="date" name="retdate" value="'+json[i].return-date+'" disabled id="retdate"></td></tr>';
+					div += '<input type="checkbox" id="copy" checked disabled><label for="copy"></label></div></td>';
+					div += '<td>'+json[i].retdate+'</td></tr>';
 				}
 				$('.issuewrapper').append(div);
 			}
+			div = '<tr class="issuefield"><td><input type="text" id="title"></td>';
+			div += '<td><input type="text" id="code"></td>';
+			div += '<td><input type="number" id="id"></td>';
+			div += '<td></td><td></td><td></td></tr>';
+			$('.issuewrapper').append(div);
+			$('.issuefield').hide();
 		}
 	})
 })
 
 function returnThesis(id){
-	console.log(id);
+	$.ajax({
+		type: 'post',
+		data: { id },
+		url: '/returnissuepost',
+		success: function(json){
+			if (json.hasOwnProperty('error')){
+				toastr.error(json.error, '', {timeOut:1300});
+				return;
+			}
+			$('#'+id).prop('disabled', true);
+			$('#'+id).prop('checked', true);
+		}
+	})
 }
 
-function newThesis(){
+$('.issuebtn').click(function(){
+	$('.issuefield').show();
+	$('.issuebtn').hide();
+	$('.submitbtn').show();
+	$('.cancelbtn').show();
+})
+
+$('.cancelbtn').click(function(){
+	$('#title').val('');
+	$('#code').val('');
+	$('#date').val('');
+	$('.issuefield').hide();
+	$('.submitbtn').hide();
+	$('.cancelbtn').hide();
+	$('.issuebtn').show();
+})
+
+$('.submitbtn').click(function(){
 	var title = $('#title').val();
 	var code = $('#code').val();
 	var student = $('#id').val();
@@ -53,4 +90,4 @@ function newThesis(){
 			location.reload();
 		}
 	})
-}
+})

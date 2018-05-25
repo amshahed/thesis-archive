@@ -33,6 +33,16 @@ $(document).ready(function(){
 			$('.email').val(json.email);
 			if (json.hasOwnProperty('picture'))
 				$('.propic').attr('src', '/papers/'+json.picture);
+			if (json.user.current==false || (json.user.current==true && json.user.level!=4)){
+				$('.editcurthesis').hide();
+				$('.addcurthesis').hide();
+			}
+			else if (json.user.current==true && json.user.level==4 && json.user.curthesis==''){
+				$('.editcurthesis').hide();
+				$('.addcurthesis').attr('href', '/addcurthesis?id='+json.user._id+'&name='+json.user.name);
+			}
+			else if (json.user.current==true && json.user.curthesis!=''){
+				$('.addcurthesis').hide();
 		}
 	})
 })
