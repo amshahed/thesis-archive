@@ -28,7 +28,7 @@ app.use(bp.urlencoded({ extended: false }));
 var port = process.env.PORT || 8080;
 
 //connect to mongo archive database
-mongo.connect('mongodb://jesus_christ:jesuschrist@ds117590.mlab.com:17590/archive', function(err, client){
+mongo.connect('mongodb://jesus_christ:jesuschrist9@ds117590.mlab.com:17590/archive', function(err, client){
 	if (err)	return console.log(err);
 	db = client.db('archive');
 
