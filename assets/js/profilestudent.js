@@ -43,6 +43,7 @@ $(document).ready(function(){
 			}
 			else if (json.user.current==true && json.user.curthesis!=''){
 				$('.addcurthesis').hide();
+			}
 		}
 	})
 })
